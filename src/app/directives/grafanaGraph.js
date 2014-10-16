@@ -129,11 +129,11 @@ function (angular, $, kbn, moment, _, GraphTooltip) {
             hooks: { draw: [updateLegendValues] },
             legend: { show: false },
             series: {
-	      dashes: {
-		show: panel.dashes,
-		lineWidth: panel.linewidth,
-		dashLength: panel.dashLength
-	      },
+              dashes: {
+                show: panel.dashes,
+                lineWidth: panel.linewidth,
+                dashLength: panel.dashLength
+              },
               stackpercent: panel.stack ? panel.percentage : false,
               stack: panel.percentage ? null : stack,
               lines:  {
@@ -178,26 +178,29 @@ function (angular, $, kbn, moment, _, GraphTooltip) {
             }
           };
 
-	  // To have crosshairs working on dashed lines we display
-	  // the lines with width 0
-	  if(options.series.dashes.show === true) {
-	    options.series.lines.show = true;
-	    options.series.lines.lineWidth = 0;
-	  }
+          // To have crosshairs working on dashed lines we display
+          // the lines with width 0
+          if(options.series.dashes.show === true) {
+            options.series.lines.show = true;
+            options.series.lines.lineWidth = 0;
+          }
 
           for (var i = 0; i < data.length; i++) {
             var series = data[i];
             series.applySeriesOverrides(panel.seriesOverrides);
 
-	    if(series.dashes.show === true) {
-	      series.lines.show = true;
-	      series.lines.lineWidth = 0;
-	    } else if(series.dashes.show === false) {
-	      series.lines.lineWidth = panel.lineWidth;
-	    }
+            if(series.dashes.show === true) {
+              series.lines.show = true;
+              series.lines.lineWidth = 0;
+            } else if(series.dashes.show === false) {
+              series.lines.lineWidth = panel.lineWidth;
+            }
 
-            series.data = series.getFlotPairs(panel.nullPointMode, panel.y_formats);
-
+            if (panel.histogram) {
+              series.data = series.getHistogramPairs(panel.nullPointMode, panel.bucketSize);
+            } else {
+              series.data = series.getFlotPairs(panel.nullPointMode, panel.y_formats);
+            }
             // if hidden remove points and disable stack
             if (scope.hiddenSeries[series.info.alias]) {
               series.data = [];
@@ -209,9 +212,15 @@ function (angular, $, kbn, moment, _, GraphTooltip) {
             options.series.bars.barWidth = data[0].stats.timeStep / 1.5;
           }
 
-          addTimeAxis(options);
-          addGridThresholds(options, panel);
-          addAnnotations(options);
+          if (panel.histogram) {
+            addHistogramAxis(options);
+            options.selection = {};
+          } else {
+            addTimeAxis(options);
+            addGridThresholds(options, panel);
+            addAnnotations(options);
+          }
+
           configureAxisOptions(data, options);
 
           var sortedSeries = _.sortBy(data, function(series) { return series.zindex; });
@@ -249,6 +258,13 @@ function (angular, $, kbn, moment, _, GraphTooltip) {
             return true;
           }
           return false;
+        }
+
+        function addHistogramAxis(options) {
+          options.xaxis = {
+            show: scope.panel['x-axis'],
+            label: "Values"
+          };
         }
 
         function addTimeAxis(options) {
