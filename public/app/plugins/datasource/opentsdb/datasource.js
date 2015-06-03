@@ -104,6 +104,8 @@ function (angular, _, kbn) {
     }
 
     function createMetricLabel(md, options, groupByTags) {
+    
+    function createMetricLabel(metric, tagData, options) {
       if (!_.isUndefined(options) && options.alias) {
         var scopedVars = {};
         _.each(md.tags, function(value, key) {

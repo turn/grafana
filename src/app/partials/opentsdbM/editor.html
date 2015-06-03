@@ -1,0 +1,93 @@
+<div class="editor-row" style="margin-top: 10px;">
+  <div  ng-repeat="target in panel.targets"
+        class="grafana-target"
+        ng-class="{'grafana-target-hidden': target.hide}"
+        ng-controller="OpenTSDBMTargetCtrl"
+        ng-init="init()">
+
+    <div class="grafana-target-inner-wrapper">
+      <div class="grafana-target-inner">
+        <ul class="grafana-target-controls">
+          <li class="dropdown">
+            <a  class="pointer dropdown-toggle"
+                data-toggle="dropdown"
+                tabindex="1">
+              <i class="icon icon-cog"></i>
+            </a>
+            <ul class="dropdown-menu pull-right" role="menu">
+              <li role="menuitem">
+                <a  tabindex="1"
+                    ng-click="duplicate()">
+                  Duplicate
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="pointer" tabindex="1" ng-click="removeDataQuery(target)">
+              <i class="icon icon-remove"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="direct-query-show">Opentsdb direct query:</div>
+      <div class="opentsdb-m-query-div">
+        <ul class="opentsdb-m-query">
+          <li>
+            <input type="text"
+            placeholder="type here"
+            spellcheck='false'
+            ng-model="target.directQueryText"
+            bs-typeahead="directQuery"
+            class="direct-query-text"
+            >
+          </li>
+          <li>
+            <select ng-model="opentsdbFunc"
+                    class="grafana-opentsdb-input input-small"
+                    ng-options="function for function in functions"
+                    ng-change="addOpentsdbFunc()">
+            </select>
+          </li>
+          <li class="grafana-target-segment">
+            Downsample:
+            <input type="checkbox"
+                   class="grafana-target-option-checkbox"
+                   ng-model="target.shouldDownsample"
+                   ng-change="targetBlur(target)"
+                   >
+          </li>
+          <li ng-hide="!target.shouldDownsample">
+            <input type="text"
+                   class="input-small grafana-target-segment-input"
+                   ng-disabled="!target.shouldDownsample"
+                   ng-model="target.downsampleInterval"
+                   ng-change="targetBlur()"
+                   placeholder="interval"
+                   >
+          </li>
+          <li class="grafana-target-segment" ng-hide="!target.shouldDownsample">
+            Aggregator
+          </li>
+          <li ng-hide="!target.shouldDownsample">
+            <select ng-model="target.downsampleAggregator"
+                    class="grafana-target-segment-input input-small"
+                    ng-options="agg for agg in aggregators"
+                    ng-change="targetBlur()">
+            </select>
+          </li>
+        </ul>
+      </div>
+      <div class="opentsdb-metric-definition" ng-hide="opentsdbFunc === ''">
+        <div class='title'>Definition:</div>
+        <div>{{definitionText}}</div>
+      </div>
+      <div class="opentsdb-metric-example" ng-hide="opentsdbFunc === ''">
+        <div class='title'>Example:</div>
+        <div>{{exampleText}}</div>
+      </div>
+    </div>
+
+  </div>
+</div>
