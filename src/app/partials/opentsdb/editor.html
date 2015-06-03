@@ -128,6 +128,13 @@
                    ng-blur="targetBlur()"
                    />
           </li>
+          
+          <li ng-repeat="func in functions">
+          <span graphite-func-editor class="grafana-target-segment grafana-target-function">
+          </span>
+          </li>
+          <li class="dropdown" graphite-add-func>
+          </li>
 
         </ul>
 

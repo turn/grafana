@@ -1,9 +1,10 @@
 define([
   'angular',
   'lodash',
-  'kbn'
+  'kbn',
+  '../services/graphite/gfunc'
 ],
-function (angular, _, kbn) {
+function (angular, _, kbn, gfunc) {
   'use strict';
 
   var module = angular.module('grafana.controllers');
@@ -13,6 +14,7 @@ function (angular, _, kbn) {
     $scope.init = function() {
       $scope.target.errors = validateTarget($scope.target);
       $scope.aggregators = ['avg', 'sum', 'min', 'max', 'dev', 'zimsum', 'mimmin', 'mimmax'];
+      $scope.functions = [];
 
       if (!$scope.target.aggregator) {
         $scope.target.aggregator = 'sum';
@@ -85,6 +87,28 @@ function (angular, _, kbn) {
     $scope.removeTag = function(key) {
       delete $scope.target.tags[key];
       $scope.targetBlur();
+    };
+
+    $scope.removeFunction = function(func) {
+      $scope.functions = _.without($scope.functions, func);
+      //$scope.targetChanged();
+    };
+
+    $scope.addFunction = function(funcDef) {
+      var newFunc = gfunc.createFuncInstance(funcDef, { withDefaultParams: true });
+      newFunc.added = true;
+      $scope.functions.push(newFunc);
+
+      // $scope.moveAliasFuncLast();
+      // $scope.smartlyHandleNewAliasByNode(newFunc);
+
+      // if ($scope.segments.length === 1 && $scope.segments[0].value === 'select metric') {
+      //   //$scope.segments = [];
+      // }
+
+      // if (!newFunc.params.length && newFunc.added) {
+      //   //$scope.targetChanged();
+      // }
     };
 
     function validateTarget(target) {

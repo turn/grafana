@@ -196,9 +196,9 @@ function (angular, app, $, _, kbn, moment, TimeSeries) {
         targets: $scope.panel.targets,
         format: $scope.panel.renderer === 'png' ? 'png' : 'json',
         maxDataPoints: $scope.resolution,
-        cacheTimeout: $scope.panel.cacheTimeout
+        cacheTimeout: $scope.panel.cacheTimeout,
+        //directQueries: $scope.panel.directQueries
       };
-
       $scope.annotationsPromise = annotationsSrv.getAnnotations($scope.rangeUnparsed, $scope.dashboard);
 
       return $scope.datasource.query(metricsQuery)
@@ -225,7 +225,6 @@ function (angular, app, $, _, kbn, moment, TimeSeries) {
       $scope.datapointsWarning = false;
       $scope.datapointsCount = 0;
       $scope.datapointsOutside = false;
-
       var data = _.map(results.data, $scope.seriesHandler);
 
       $scope.datapointsWarning = $scope.datapointsCount === 0 || $scope.datapointsOutside;

@@ -77,10 +77,15 @@ function (angular, _) {
 
       $scope.addDataQuery = function() {
         $scope.panel.targets.push({target: ''});
+
+        if (!$scope.panel.directQueries) {
+          $scope.panel.directQueries = [];
+        }
       };
 
       $scope.removeDataQuery = function (query) {
         $scope.panel.targets = _.without($scope.panel.targets, query);
+        $scope.panel.directQueries = _.without($scope.panel.directQueries,query);
         $scope.get_data();
       };
 

@@ -13,6 +13,7 @@ define([
   './playlistCtrl',
   './inspectCtrl',
   './opentsdbTargetCtrl',
+  './opentsdbMTargetCtrl',
   './annotationsEditorCtrl',
   './templateEditorCtrl',
   './sharePanelCtrl',

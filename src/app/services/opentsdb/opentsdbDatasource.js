@@ -38,7 +38,6 @@ function (angular, _, kbn) {
           groupByTags[key] = true;
         });
       });
-
       return this.performTimeSeriesQuery(queries, start, end)
         .then(_.bind(function(response) {
           var result = _.map(response.data, _.bind(function(metricData, index) {
@@ -86,7 +85,7 @@ function (angular, _, kbn) {
       var dps = [],
           tagData = [],
           metricLabel = null;
-
+      
       if (!_.isEmpty(md.tags)) {
         _.each(_.pairs(md.tags), function(tag) {
           if (_.has(groupByTags, tag[0])) {
@@ -105,7 +104,7 @@ function (angular, _, kbn) {
 
       return { target: metricLabel, datapoints: dps };
     }
-
+    
     function createMetricLabel(metric, tagData, options) {
       if (!_.isUndefined(options) && options.alias) {
         return options.alias;
