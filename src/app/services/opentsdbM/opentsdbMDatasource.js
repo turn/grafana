@@ -25,8 +25,8 @@ function (angular, _, kbn) {
 
       return this.performDirectQuery(options.targets, start, end)
         .then(_.bind(function(response) {
-          var result = _.map(response.data, _.bind(function(metricData) {
-            return transformMetricDataDirectQuery(metricData);
+          var result = _.map(response.data, _.bind(function(metricData, index) {
+            return transformMetricDataDirectQuery(metricData, this.targets[index]);
           }, this));
           return { data: result };
         }, options));
@@ -61,18 +61,22 @@ function (angular, _, kbn) {
     }
 
     function convertToQuery(target) {
-      if (!target.shouldDownsample) {
-        return target.directQueryText;
-      }
+      return target.directQueryText;
 
-      return target.directQueryText.replace(":", ":" + target.downsampleInterval + "-" + target.downsampleAggregator + ":rate:");
+      // TEMPORARILY REMOVED FOR SIMPLER OpenTSDBM Query
+      // if (!target.shouldDownsample) {
+      //   return target.directQueryText;
+      // }
+
+      // var rateStr = (target.shouldComputeRate) ? ":rate:" : ":";
+      // return target.directQueryText.replace(":", ":" + target.downsampleInterval + "-" + target.downsampleAggregator + rateStr);
     }
 
-    function transformMetricDataDirectQuery(md) {
+    function transformMetricDataDirectQuery(md, options) {
       var dps = [],
           metricLabel = null;
 
-      metricLabel = md.expression;
+      metricLabel = (options.alias == null) ? md.expression : options.alias;
 
       _.each(md.dps, function (v, k) {
         dps.push([v, k]);
@@ -95,3 +99,4 @@ function (angular, _, kbn) {
   });
 
 });
+

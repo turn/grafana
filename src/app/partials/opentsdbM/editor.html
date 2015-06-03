@@ -5,7 +5,7 @@
         ng-controller="OpenTSDBMTargetCtrl"
         ng-init="init()">
 
-    <div class="grafana-target-inner-wrapper">
+    <div class="grafana-target-inner-wrapper" id="grafana-target-inner-wrapper-m">
       <div class="grafana-target-inner">
         <ul class="grafana-target-controls">
           <li class="dropdown">
@@ -43,12 +43,34 @@
             class="direct-query-text"
             >
           </li>
+          <li class="grafana-target-segment">
+            Alias:
+          </li>
+          <li>
+            <input type="text"
+                   class="grafana-target-segment-input input-medium"
+                   id="opentsdb-m-alias"
+                   ng-model="target.alias"
+                   spellcheck='false'
+                   placeholder="series alias"
+                   data-min-length=0 data-items=100
+                   ng-blur="targetBlur()"
+                   />
+          </li>
           <li>
             <select ng-model="opentsdbFunc"
                     class="grafana-opentsdb-input input-small"
                     ng-options="function for function in functions"
                     ng-change="addOpentsdbFunc()">
             </select>
+          </li>
+          <!-- <li class="grafana-target-segment">
+              Rate:
+              <input type="checkbox"
+                     class="grafana-target-option-checkbox"
+                     ng-model="target.shouldComputeRate"
+                     ng-change="targetBlur()"
+                     >
           </li>
           <li class="grafana-target-segment">
             Downsample:
@@ -68,15 +90,16 @@
                    >
           </li>
           <li class="grafana-target-segment" ng-hide="!target.shouldDownsample">
-            Aggregator
+            Downsample Aggregator
           </li>
           <li ng-hide="!target.shouldDownsample">
             <select ng-model="target.downsampleAggregator"
                     class="grafana-target-segment-input input-small"
                     ng-options="agg for agg in aggregators"
-                    ng-change="targetBlur()">
+                    ng-change="targetBlur()"
+                    >
             </select>
-          </li>
+          </li> -->
         </ul>
       </div>
       <div class="opentsdb-metric-definition" ng-hide="opentsdbFunc === ''">
@@ -85,7 +108,10 @@
       </div>
       <div class="opentsdb-metric-example" ng-hide="opentsdbFunc === ''">
         <div class='title'>Example:</div>
-        <div>{{exampleText}}</div>
+        <input type="text"
+        ng-model="exampleText"
+        class="opentsdb-metric-example-text"
+        ></input>
       </div>
     </div>
 

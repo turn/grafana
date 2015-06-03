@@ -17,17 +17,15 @@ function (angular, _, kbn, opentsdbMFunc) {
       $scope.functions = opentsdbMFunc.getFuncList();
       //$scope.directQueryText = '';
       $scope.func = '';
-      $scope.opentsdbFunc = '';
-      $scope.exampleText = '';
-      $scope.definitionText = '';
 
-      // if (!$scope.target.aggregator) {
-      //   $scope.target.aggregator = 'sum';
-      // }
+      $scope.opentsdbFunc = 'sum';
+      $scope.definitionText = opentsdbMFunc.getFuncDefinition($scope.opentsdbFunc);
+      $scope.exampleText = opentsdbMFunc.getFuncExample($scope.opentsdbFunc);
 
-      if (!$scope.target.downsampleAggregator) {
-        $scope.target.downsampleAggregator = 'sum';
-      }
+      // TEMPORARILY REMOVED FOR SIMPLER OpenTSDBM Query
+      // $scope.target.shouldDownsample = true;
+      // $scope.target.downsampleInterval = '1m';
+      // $scope.target.downsampleAggregator = 'avg';
 
       $scope.$on('typeahead-updated', function() {
         $timeout($scope.targetBlur);
@@ -62,7 +60,7 @@ function (angular, _, kbn, opentsdbMFunc) {
     };
 
     $scope.addOpentsdbFunc = function() {
-      $scope.target.directQueryText = opentsdbMFunc.getFuncExpression($scope.opentsdbFunc);
+      //$scope.target.directQueryText = opentsdbMFunc.getFuncExpression($scope.opentsdbFunc);
       $scope.definitionText = opentsdbMFunc.getFuncDefinition($scope.opentsdbFunc);
       $scope.exampleText = opentsdbMFunc.getFuncExample($scope.opentsdbFunc);
     };
