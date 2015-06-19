@@ -47,19 +47,6 @@ function (angular, _, kbn) {
         }, options));
     };
 
-    OpenTSDBDatasource.prototype.queryDirectQuery = function(options) {
-      var start = convertToTSDBTime(options.range.from);
-      var end = convertToTSDBTime(options.range.to);
-
-      return this.performDirectQuery(options.queryContent, start, end)
-        .then(_.bind(function(response) {
-          var result = _.map(response.data, _.bind(function(metricData) {
-            return transformMetricDataDirectQuery(metricData);
-          }, this));
-          return { data: result };
-        }, options));
-    };
-
     OpenTSDBDatasource.prototype.performTimeSeriesQuery = function(queries, start, end) {
       var reqBody = {
         start: start,
@@ -77,19 +64,6 @@ function (angular, _, kbn) {
         data: reqBody
       };
 
-      return $http(options);
-    };
-
-    OpenTSDBDatasource.prototype.performDirectQuery = function(query, startTime, endTime) {
-      var options = {
-        method: 'GET',
-        url: this.url + '/api/query/query',
-        params: {
-          start: startTime,
-          end: endTime,
-          x: query
-        }
-      };
       return $http(options);
     };
 
@@ -130,21 +104,7 @@ function (angular, _, kbn) {
 
       return { target: metricLabel, datapoints: dps };
     }
-
-    function transformMetricDataDirectQuery(md) {
-      var dps = [],
-          metricLabel = null;
-
-      metricLabel = md.expression;
-
-      _.each(md.dps, function (v, k) {
-        dps.push([v, k]);
-      });
-
-      return { target: metricLabel, datapoints: dps };
-    }
-
-
+    
     function createMetricLabel(metric, tagData, options) {
       if (!_.isUndefined(options) && options.alias) {
         return options.alias;
