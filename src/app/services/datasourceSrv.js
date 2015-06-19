@@ -6,6 +6,7 @@ define([
   './influxdb/influxdbDatasource',
   './opentsdb/opentsdbDatasource',
   './elasticsearch/es-datasource',
+  './opentsdbM/opentsdbMDatasource',
 ],
 function (angular, _, config) {
   'use strict';
@@ -19,6 +20,7 @@ function (angular, _, config) {
     var grafanaDB = {};
 
     this.init = function() {
+      debugger;
       _.each(config.datasources, function(value, key) {
         var ds = this.datasourceFactory(value);
         if (value.default) {
@@ -69,6 +71,9 @@ function (angular, _, config) {
         break;
       case 'elasticsearch':
         Datasource = $injector.get('ElasticDatasource');
+        break;
+      case 'opentsdbM':
+        Datasource = $injector.get('OpenTSDBMDatasource');
         break;
       default:
         Datasource = $injector.get(ds.type);

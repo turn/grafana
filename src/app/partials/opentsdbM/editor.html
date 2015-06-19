@@ -1,0 +1,19 @@
+<div class="editor-row" style="margin-top: 10px;">
+  <div  ng-repeat="target in panel.targets"
+        class="grafana-target"
+        ng-class="{'grafana-target-hidden': target.hide}"
+        ng-controller="OpenTSDBTargetCtrl"
+        ng-init="init()">
+
+    <div>
+      <div>Opentsdb direct query:</div>
+      <input type="text"
+      placeholder="paste here"
+      spellcheck='false'
+      ng-model="target.opentsdbDirectQuery"
+      bs-typeahead="directQuery"
+      class="direct-query-text"
+      >
+    </div>
+  </div>
+</div>
