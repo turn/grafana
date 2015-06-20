@@ -199,38 +199,13 @@ function (angular, app, $, _, kbn, moment, TimeSeries) {
         targets: $scope.panel.targets,
         format: $scope.panel.renderer === 'png' ? 'png' : 'json',
         maxDataPoints: $scope.resolution,
-        cacheTimeout: $scope.panel.cacheTimeout
+        cacheTimeout: $scope.panel.cacheTimeout,
+        directQueryText: $scope.directQueryText
       };
 
       $scope.annotationsPromise = annotationsSrv.getAnnotations($scope.rangeUnparsed, $scope.dashboard);
 
       return $scope.datasource.query(metricsQuery)
-        .then($scope.dataHandler)
-        .then(null, function(err) {
-          $scope.panelMeta.loading = false;
-          $scope.panelMeta.error = err.message || "Timeseries data request error";
-          $scope.inspector.error = err;
-          $scope.legend = [];
-          $scope.render([]);
-        });
-    };
-
-    $scope.get_data_direct_query = function(query) {
-      $scope.updateTimeRange();
-
-      var metricsQuery = {
-        range: $scope.rangeUnparsed,
-        interval: $scope.interval,
-        targets: $scope.panel.targets,
-        format: $scope.panel.renderer === 'png' ? 'png' : 'json',
-        maxDataPoints: $scope.resolution,
-        cacheTimeout: $scope.panel.cacheTimeout,
-        queryContent: query
-      };
-
-      $scope.annotationsPromise = annotationsSrv.getAnnotations($scope.rangeUnparsed, $scope.dashboard);
-
-      return $scope.datasource.queryDirectQuery(metricsQuery)
         .then($scope.dataHandler)
         .then(null, function(err) {
           $scope.panelMeta.loading = false;
@@ -265,6 +240,10 @@ function (angular, app, $, _, kbn, moment, TimeSeries) {
         }, function() {
           $scope.render(data);
         });
+    };
+
+    $scope.setDirectQuery = function(directQuery) {
+      $scope.directQueryText = directQuery;
     };
 
     $scope.seriesHandler = function(seriesData, index) {

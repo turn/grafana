@@ -19,11 +19,11 @@ function (angular, _, kbn) {
       this.supportMetrics = true;
     }
 
-    OpenTSDBMDatasource.prototype.queryDirectQuery = function(options) {
+    OpenTSDBMDatasource.prototype.query = function(options) {
       var start = convertToTSDBTime(options.range.from);
       var end = convertToTSDBTime(options.range.to);
 
-      return this.performDirectQuery(options.queryContent, start, end)
+      return this.performDirectQuery(options.directQueryText, start, end)
         .then(_.bind(function(response) {
           var result = _.map(response.data, _.bind(function(metricData) {
             return transformMetricDataDirectQuery(metricData);

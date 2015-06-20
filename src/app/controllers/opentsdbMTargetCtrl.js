@@ -9,12 +9,13 @@ function (angular, _, kbn, gfunc) {
 
   var module = angular.module('grafana.controllers');
 
-  module.controller('OpenTSDBTargetCtrl', function($scope, $timeout) {
+  module.controller('OpenTSDBMTargetCtrl', function($scope, $timeout) {
 
     $scope.init = function() {
       $scope.target.errors = validateTarget($scope.target);
       $scope.aggregators = ['avg', 'sum', 'min', 'max', 'dev', 'zimsum', 'mimmin', 'mimmax'];
       $scope.functions = [];
+      $scope.directQueryText = '';
 
       if (!$scope.target.aggregator) {
         $scope.target.aggregator = 'sum';
@@ -37,6 +38,11 @@ function (angular, _, kbn, gfunc) {
         $scope.oldTarget = angular.copy($scope.target);
         $scope.get_data();
       }
+    };
+
+    $scope.directQuery = function() {
+      $scope.setDirectQuery($scope.directQueryText);
+      $scope.get_data();
     };
 
     $scope.duplicate = function() {

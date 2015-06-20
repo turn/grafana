@@ -2,15 +2,15 @@
   <div  ng-repeat="target in panel.targets"
         class="grafana-target"
         ng-class="{'grafana-target-hidden': target.hide}"
-        ng-controller="OpenTSDBTargetCtrl"
+        ng-controller="OpenTSDBMTargetCtrl"
         ng-init="init()">
 
     <div>
       <div>Opentsdb direct query:</div>
       <input type="text"
-      placeholder="paste here"
+      placeholder="type here"
       spellcheck='false'
-      ng-model="target.opentsdbDirectQuery"
+      ng-model="directQueryText"
       bs-typeahead="directQuery"
       class="direct-query-text"
       >
