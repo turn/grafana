@@ -6,8 +6,8 @@
         ng-init="init()">
 
     <div>
-      <div>Opentsdb direct query:</div>
-      <ul class='opentsdb-m-query'>
+      <div class="direct-query-show">Opentsdb direct query:</div>
+      <ul class="opentsdb-m-query">
         <li>
           <input type="text"
           placeholder="type here"
@@ -21,7 +21,7 @@
         </li> -->
         <li>
           <select ng-model="opentsdbFunc"
-                  class="grafana-target-segment-input input-small"
+                  class="grafana-opentsdb-input input-small"
                   ng-change="addOpentsdbFunc()">
             <option value="Sum">Sum</option>
             <option value="Difference">Difference</option>

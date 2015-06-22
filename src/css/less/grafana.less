@@ -309,6 +309,14 @@ select.grafana-target-segment-input {
   padding: 8px 5px;
 }
 
+select.grafana-opentsdb-input {
+  border: none;
+  border-right: 1px solid @grafanaTargetSegmentBorder;
+  margin: 0px;
+  border-radius: 0;
+  padding: 8px 5px;
+}
+
 .grafana-target .dropdown {
   padding: 0; margin: 0;
 }
@@ -560,4 +568,17 @@ select.grafana-target-segment-input {
   td { padding: 3px; }
   th:last-child { text-align: left; }
   td:first-child { text-align: right; }
+}
+
+.opentsdb-m-query {
+  list-style: none;
+  margin: 0;
+  margin-right: 90px;
+  >li {
+    float: left;
+    border: none;
+    margin: 0px;
+    border-radius: 0;
+    padding: 8px 5px;
+  }
 }

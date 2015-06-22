@@ -1,7 +1,6 @@
 define([
-	'lodash'
-],
-function(_) {
+	],
+function() {
 	'use strict';
 
 	var index = [];
