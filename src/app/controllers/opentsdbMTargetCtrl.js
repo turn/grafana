@@ -18,6 +18,8 @@ function (angular, _, kbn, opentsdbMFunc) {
       $scope.directQueryText = '';
       $scope.func = '';
       $scope.opentsdbFunc = '';
+      $scope.exampleText = '';
+      $scope.definitionText = '';
 
       if (!$scope.target.aggregator) {
         $scope.target.aggregator = 'sum';
@@ -42,6 +44,11 @@ function (angular, _, kbn, opentsdbMFunc) {
       }
     };
 
+    $scope.duplicate = function() {
+      var clone = angular.copy($scope.target);
+      $scope.panel.targets.push(clone);
+    };
+
     $scope.directQuery = function() {
       $scope.setDirectQuery($scope.directQueryText);
       $scope.get_data();
@@ -55,6 +62,8 @@ function (angular, _, kbn, opentsdbMFunc) {
 
     $scope.addOpentsdbFunc = function() {
       $scope.directQueryText = opentsdbMFunc.getFuncExpression($scope.opentsdbFunc);
+      $scope.definitionText = opentsdbMFunc.getFuncDefinition($scope.opentsdbFunc);
+      $scope.exampleText = opentsdbMFunc.getFuncExample($scope.opentsdbFunc);
     };
 
     function validateTarget(target) {
