@@ -23,7 +23,7 @@ function (angular, _, kbn) {
       var start = convertToTSDBTime(options.range.from);
       var end = convertToTSDBTime(options.range.to);
 
-      return this.performDirectQuery(options.directQueryText, start, end)
+      return this.performDirectQuery(options.targets, start, end)
         .then(_.bind(function(response) {
           var result = _.map(response.data, _.bind(function(metricData) {
             return transformMetricDataDirectQuery(metricData);
@@ -32,18 +32,33 @@ function (angular, _, kbn) {
         }, options));
     };
 
-    OpenTSDBMDatasource.prototype.performDirectQuery = function(query, startTime, endTime) {
+    OpenTSDBMDatasource.prototype.performDirectQuery = function(targets, startTime, endTime) {
       var options = {
         method: 'GET',
-        url: this.url + '/api/query/query',
-        params: {
-          start: startTime,
-          end: endTime,
-          x: query
-        }
+        url: this.url + directQueryURL(targets, startTime, endTime)
       };
       return $http(options);
     };
+
+    function directQueryURL(targets, startTime, endTime) {
+      var url = '/api/query/query?';
+
+      if (startTime) {
+        url += 'start=' + startTime;
+      }
+
+      if (endTime) {
+        url += '&end=' + endTime;
+      }
+
+      for (var i = 0, length = targets.length; i < length; i++) {
+        if (targets[i].directQueryText) {
+          url += '&x=' + targets[i].directQueryText;
+        }
+      }
+
+      return url;
+    }
 
     function transformMetricDataDirectQuery(md) {
       var dps = [],

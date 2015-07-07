@@ -200,9 +200,8 @@ function (angular, app, $, _, kbn, moment, TimeSeries) {
         format: $scope.panel.renderer === 'png' ? 'png' : 'json',
         maxDataPoints: $scope.resolution,
         cacheTimeout: $scope.panel.cacheTimeout,
-        directQueryText: $scope.directQueryText
+        //directQueries: $scope.panel.directQueries
       };
-
       $scope.annotationsPromise = annotationsSrv.getAnnotations($scope.rangeUnparsed, $scope.dashboard);
 
       return $scope.datasource.query(metricsQuery)
@@ -244,6 +243,11 @@ function (angular, app, $, _, kbn, moment, TimeSeries) {
 
     $scope.setDirectQuery = function(directQuery) {
       $scope.directQueryText = directQuery;
+      if (!$scope.panel.directQueries) {
+        $scope.panel.directQueries = [];
+      } else {
+        $scope.panel.directQueries.push(directQuery);
+      }
     };
 
     $scope.seriesHandler = function(seriesData, index) {
