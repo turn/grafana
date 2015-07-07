@@ -53,11 +53,19 @@ function (angular, _, kbn) {
 
       for (var i = 0, length = targets.length; i < length; i++) {
         if (targets[i].directQueryText) {
-          url += '&x=' + targets[i].directQueryText;
+          url += '&x=' + convertToQuery(targets[i]);
         }
       }
 
       return url;
+    }
+
+    function convertToQuery(target) {
+      if (!target.shouldDownsample) {
+        return target.directQueryText;
+      }
+
+      return target.directQueryText.replace(":", ":" + target.downsampleInterval + "-" + target.downsampleAggregator + ":rate:");
     }
 
     function transformMetricDataDirectQuery(md) {

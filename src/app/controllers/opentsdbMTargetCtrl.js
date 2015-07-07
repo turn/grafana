@@ -13,7 +13,7 @@ function (angular, _, kbn, opentsdbMFunc) {
 
     $scope.init = function() {
       $scope.target.errors = validateTarget($scope.target);
-      //$scope.aggregators = ['avg', 'sum', 'min', 'max', 'dev', 'zimsum', 'mimmin', 'mimmax'];
+      $scope.aggregators = ['avg', 'sum', 'min', 'max', 'dev', 'zimsum', 'mimmin', 'mimmax'];
       $scope.functions = [];
       //$scope.directQueryText = '';
       $scope.func = '';
@@ -25,9 +25,9 @@ function (angular, _, kbn, opentsdbMFunc) {
       //   $scope.target.aggregator = 'sum';
       // }
 
-      // if (!$scope.target.downsampleAggregator) {
-      //   $scope.target.downsampleAggregator = 'sum';
-      // }
+      if (!$scope.target.downsampleAggregator) {
+        $scope.target.downsampleAggregator = 'sum';
+      }
 
       $scope.$on('typeahead-updated', function() {
         $timeout($scope.targetBlur);
@@ -35,7 +35,7 @@ function (angular, _, kbn, opentsdbMFunc) {
     };
 
     $scope.targetBlur = function() {
-      // $scope.target.errors = validateTarget($scope.target);
+      $scope.target.errors = validateTarget($scope.target);
 
       // // this does not work so good
       // if (!_.isEqual($scope.oldTarget, $scope.target) && _.isEmpty($scope.target.errors)) {
@@ -70,9 +70,9 @@ function (angular, _, kbn, opentsdbMFunc) {
     function validateTarget(target) {
       var errs = {};
 
-      if (!target.metric) {
-        errs.metric = "You must supply a metric name.";
-      }
+      // if (!target.metric) {
+      //   errs.metric = "You must supply a metric name.";
+      // }
 
       if (target.shouldDownsample) {
         try {
@@ -86,9 +86,9 @@ function (angular, _, kbn, opentsdbMFunc) {
         }
       }
 
-      if (target.tags && _.has(target.tags, target.currentTagKey)) {
-        errs.tags = "Duplicate tag key '" + target.currentTagKey + "'.";
-      }
+      // if (target.tags && _.has(target.tags, target.currentTagKey)) {
+      //   errs.tags = "Duplicate tag key '" + target.currentTagKey + "'.";
+      // }
 
       return errs;
     }

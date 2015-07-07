@@ -75,6 +75,16 @@
                    placeholder="interval"
                    >
           </li>
+          <li class="grafana-target-segment" ng-hide="!target.shouldDownsample">
+            Aggregator
+          </li>
+          <li ng-hide="!target.shouldDownsample">
+            <select ng-model="target.downsampleAggregator"
+                    class="grafana-target-segment-input input-small"
+                    ng-options="agg for agg in aggregators"
+                    ng-change="targetBlur()">
+            </select>
+          </li>
         </ul>
       </div>
       <div class="opentsdb-metric-definition" ng-hide="opentsdbFunc === ''">
