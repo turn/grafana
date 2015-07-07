@@ -241,15 +241,6 @@ function (angular, app, $, _, kbn, moment, TimeSeries) {
         });
     };
 
-    $scope.setDirectQuery = function(directQuery) {
-      $scope.directQueryText = directQuery;
-      if (!$scope.panel.directQueries) {
-        $scope.panel.directQueries = [];
-      } else {
-        $scope.panel.directQueries.push(directQuery);
-      }
-    };
-
     $scope.seriesHandler = function(seriesData, index) {
       var datapoints = seriesData.datapoints;
       var alias = seriesData.target;

@@ -42,7 +42,13 @@ function (angular, _, kbn, opentsdbMFunc) {
       //   $scope.oldTarget = angular.copy($scope.target);
       //   $scope.get_data();
       // }
-      $scope.setDirectQuery($scope.target.directQueryText);
+      //$scope.setDirectQuery($scope.target.directQueryText);
+      if (!$scope.panel.directQueries) {
+        $scope.panel.directQueries = [];
+      } else {
+        $scope.panel.directQueries.push($scope.target.directQueryText);
+      }
+
       $scope.get_data();
     };
 
