@@ -20,21 +20,21 @@ function() {
 
 	addFunctionDef({
 		name: 'difference',
-		expression: 'difference(sum:proc.stat.cpu.percpu{cpu=1}',
+		expression: 'difference(sum:proc.stat.cpu.percpu{cpu=1})',
 		definition: 'Takes two and subtract the second one &nbsp; from the first (constants may not be used)',
 		example: 'difference(sum:proc.stat.cpu.percpu{cpu=1},sum:proc.stat.cpu.percpu{cpu=2})'
 	});
 
 	addFunctionDef({
 		name: 'multiply',
-		expression: 'multiply(sum:proc.stat.cpu.percpu{cpu=1}',
+		expression: 'multiply(sum:proc.stat.cpu.percpu{cpu=1})',
 		definition: 'Takes two or more series and multiplies their points (constants may not be used)',
 		example: 'multiply(sum:proc.stat.cpu.percpu{cpu=1},sum:proc.stat.cpu.percpu{cpu=2})'
 	});
 
 	addFunctionDef({
 		name: 'divide',
-		expression: 'divide(sum:proc.stat.cpu.percpu{cpu=1}',
+		expression: 'divide(sum:proc.stat.cpu.percpu{cpu=1})',
 		definition: 'Takes two series and divide the first one with the second (constants may not be used)',
 		example: 'divide(sum:proc.stat.cpu.percpu{cpu=1},sum:proc.stat.cpu.percpu{cpu=2})'
 	});
@@ -107,6 +107,14 @@ function() {
 
 		getFuncExample: function(name) {
 			return index[name].example;
+		},
+
+		getFuncList: function() {
+			var funcList = [];
+			for (var obj in index) {
+				funcList.push(obj);
+			}
+			return funcList;
 		}
 	};
 });

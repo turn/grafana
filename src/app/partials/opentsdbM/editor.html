@@ -46,16 +46,8 @@
           <li>
             <select ng-model="opentsdbFunc"
                     class="grafana-opentsdb-input input-small"
+                    ng-options="function for function in functions"
                     ng-change="addOpentsdbFunc()">
-              <option value="sum">sum</option>
-              <option value="difference">difference</option>
-              <option value="multiply">multiply</option>
-              <option value="divide">divide</option>
-              <option value="movingAverage">movingAverage</option>
-              <option value="highestCurrent">highestCurrent</option>
-              <option value="highestMax">highestMax</option>
-              <option value="scale">scale</option>
-              <option value="alias">alias</option>
             </select>
           </li>
           <li class="grafana-target-segment">

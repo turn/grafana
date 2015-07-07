@@ -14,7 +14,7 @@ function (angular, _, kbn, opentsdbMFunc) {
     $scope.init = function() {
       $scope.target.errors = validateTarget($scope.target);
       $scope.aggregators = ['avg', 'sum', 'min', 'max', 'dev', 'zimsum', 'mimmin', 'mimmax'];
-      $scope.functions = [];
+      $scope.functions = opentsdbMFunc.getFuncList();
       //$scope.directQueryText = '';
       $scope.func = '';
       $scope.opentsdbFunc = '';
@@ -62,7 +62,7 @@ function (angular, _, kbn, opentsdbMFunc) {
     };
 
     $scope.addOpentsdbFunc = function() {
-      $scope.directQueryText = opentsdbMFunc.getFuncExpression($scope.opentsdbFunc);
+      $scope.target.directQueryText = opentsdbMFunc.getFuncExpression($scope.opentsdbFunc);
       $scope.definitionText = opentsdbMFunc.getFuncDefinition($scope.opentsdbFunc);
       $scope.exampleText = opentsdbMFunc.getFuncExample($scope.opentsdbFunc);
     };
