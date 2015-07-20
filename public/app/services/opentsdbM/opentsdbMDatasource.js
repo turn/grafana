@@ -97,6 +97,4 @@ function (angular, _, kbn) {
 
     return OpenTSDBMDatasource;
   });
-
 });
-
