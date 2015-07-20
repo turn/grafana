@@ -20,7 +20,7 @@ function (angular, _, config) {
     var grafanaDB = {};
 
     this.init = function() {
-      
+
       _.each(config.datasources, function(value, key) {
         var ds = this.datasourceFactory(value);
         if (value.default) {
