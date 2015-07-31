@@ -39,7 +39,7 @@
             placeholder="type here"
             spellcheck='false'
             ng-model="target.directQueryText"
-            bs-typeahead="directQuery"
+			ng-model-options="{ debounce : 3000 }"
             class="direct-query-text"
             >
           </li>

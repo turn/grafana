@@ -55,6 +55,12 @@ function (angular, _, kbn, opentsdbMFunc) {
       $scope.panel.targets.push(clone);
     };
 
+	  $scope.$watch('target.directQueryText', function(newVal, oldVal) {
+		if(newVal != oldVal) {
+			$scope.targetBlur();
+		}
+	  });
+
     $scope.directQuery = function() {
       $scope.targetBlur();
     };
