@@ -207,11 +207,18 @@ function (angular, app, $, _, kbn, moment, TimeSeries) {
       return $scope.datasource.query(metricsQuery)
         .then($scope.dataHandler)
         .then(null, function(err) {
-          $scope.panelMeta.loading = false;
-          $scope.panelMeta.error = err.message || "Timeseries data request error";
-          $scope.inspector.error = err;
-          $scope.legend = [];
-          $scope.render([]);
+		  if(err && err.data && err.data.error && err.data.error.code) {
+			  $scope.panelMeta.loading = false;
+			  $scope.panelMeta.error = err.data.error.message || "Timeseries data request error";
+			  $scope.inspector.error = err.data.error;
+			  $scope.render();
+		  } else {
+			  $scope.panelMeta.loading = false;
+			  $scope.panelMeta.error = err.message || "Timeseries data request error";
+			  $scope.inspector.error = err;
+			  $scope.legend = [];
+			  $scope.render([]);
+		  }
         });
     };
 
