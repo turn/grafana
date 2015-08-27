@@ -1,0 +1,126 @@
+<div class="editor-row" style="margin-top: 10px;">
+
+  <div  ng-repeat="target in panel.targets"
+        style="margin-bottom: 10px;"
+        ng-class="{'grafana-target-hidden': target.hide}"
+        ng-controller="OpenTSDBMTargetCtrl"
+        ng-init="init()">
+
+    <div class="tight-form">
+      <ul class="tight-form-list pull-right">
+        <li class="tight-form-item">
+          Alias:
+          <tip>Use patterns like $tag_tagname to replace part of the alias for a tag value</tip>
+        </li>
+        <li>
+          <input type="text"
+                 class="tight-form-input input-large"
+                 ng-model="target.alias"
+                 spellcheck='false'
+                 placeholder="series alias"
+                 data-min-length=0 data-items=100
+                 ng-blur="targetBlur()"
+                 />
+        </li>
+        <li class="tight-form-item">
+          <div class="dropdown">
+            <a  class="pointer dropdown-toggle"
+              data-toggle="dropdown"
+              tabindex="1">
+              <i class="fa fa-bars"></i>
+            </a>
+            <ul class="dropdown-menu pull-right" role="menu">
+              <li role="menuitem">
+                <a  tabindex="1"
+                  ng-click="duplicate()">
+                  Duplicate
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="tight-form-item last">
+          <a class="pointer" tabindex="1" ng-click="removeDataQuery(target)">
+            <i class="fa fa-remove"></i>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="tight-form-list">
+        <li>
+          <a  class="tight-form-item"
+              ng-click="target.hide = !target.hide; get_data();"
+              role="menuitem">
+            <i class="fa fa-eye"></i>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="tight-form-list" role="menu">
+        <li class="tight-form-item" style="width: 146px">
+          Opentsdb direct query:
+        </li>
+        <li>
+          <input type="text"
+                 class="input-large tight-form-input"
+                 ng-model="target.metric"
+                 spellcheck='false'
+                 bs-typeahead="suggestMetrics"
+                 placeholder="type metric name here"
+                 data-min-length=0 data-items=100
+                 ng-model-onblur
+                 ng-model="target.directQueryText"
+                 ng-change="targetBlur()"
+                 style="width: 500px"
+                 >
+        </li>
+      </ul>
+
+      <div class="clearfix"></div>
+    </div>
+
+
+    <div class="tight-form">
+      <ul class="tight-form-list">
+        <li class="tight-form-item" style="width: 86px">
+          Function:
+        </li>
+        <li>
+          <select ng-model="opentsdbFunc"
+                  class="tight-form-input input-small"
+                  ng-options="function for function in functions"
+                  ng-change="addOpentsdbFunc()"
+                  style="width: 132px"
+                  >
+          </select>
+        </li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="tight-form">
+      <ul class="tight-form-list">
+        <li class="tight-form-item" style="width: 86px">
+          Definition:
+        </li>
+        <li class="tight-form-item">
+          {{definitionText}}
+        </li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="tight-form">
+      <ul class="tight-form-list">
+        <li class="tight-form-item" style="width: 86px">
+          Example:
+        </li>
+        <li class="tight-form-item">
+          {{exampleText}}
+        </li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+
+  </div>
+</div>
