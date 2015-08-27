@@ -62,17 +62,13 @@
         </li>
         <li>
           <input type="text"
-                 class="input-large tight-form-input"
-                 ng-model="target.metric"
-                 spellcheck='false'
-                 bs-typeahead="suggestMetrics"
-                 placeholder="type metric name here"
-                 data-min-length=0 data-items=100
-                 ng-model-onblur
-                 ng-model="target.directQueryText"
-                 ng-change="targetBlur()"
-                 style="width: 500px"
-                 >
+            class="input-large tight-form-input"
+            placeholder="type here"
+            spellcheck='false'
+            ng-model="target.directQueryText"
+            ng-model-options="{ debounce : 3000 }"
+            style="width: 500px"
+            >
         </li>
       </ul>
 
