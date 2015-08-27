@@ -2,7 +2,7 @@ define([
   'angular',
   'lodash',
   'kbn',
-  '../services/opentsdbM/opentsdbMFunc'
+  './opentsdbMFunc'
 ],
 function (angular, _, kbn, opentsdbMFunc) {
   'use strict';
@@ -22,7 +22,7 @@ function (angular, _, kbn, opentsdbMFunc) {
       $scope.definitionText = opentsdbMFunc.getFuncDefinition($scope.opentsdbFunc);
       $scope.exampleText = opentsdbMFunc.getFuncExample($scope.opentsdbFunc);
 
-      // TEMPORARILY REMOVED FOR SIMPLER OpenTSDBM Query
+      // TEMPORARILY REMOVED FOR SIMPLER OpenTSDBM Query`
       // $scope.target.shouldDownsample = true;
       // $scope.target.downsampleInterval = '1m';
       // $scope.target.downsampleAggregator = 'avg';
@@ -56,7 +56,7 @@ function (angular, _, kbn, opentsdbMFunc) {
     };
 
     $scope.$watch('target.directQueryText', function(newVal, oldVal) {
-      if(newVal != oldVal) {
+      if(newVal !== oldVal) {
         $scope.targetBlur();
       }
     });

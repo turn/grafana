@@ -2,7 +2,7 @@ define([
   'angular',
   'lodash',
   'kbn',
-  '../services/graphite/gfunc'
+  './gfunc'
 ],
 function (angular, _, kbn, gfunc) {
   'use strict';

@@ -1,0 +1,16 @@
+{
+  "pluginType": "datasource",
+  "name": "OpenTSDBM",
+
+  "type": "opentsdbM",
+  "serviceName": "OpenTSDBMDatasource",
+
+  "module": "plugins/datasource/opentsdbM/datasource",
+
+  "partials": {
+    "config": "app/plugins/datasource/opentsdbM/partials/config.html",
+    "query": "app/plugins/datasource/opentsdbM/partials/query.editor.html"
+  },
+
+  "metrics": true
+}

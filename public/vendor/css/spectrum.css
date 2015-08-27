@@ -120,12 +120,12 @@ License: MIT
     height: 28px;
 }
 
-/* Don't allow text selection */
+/* Allow text selection */
 .sp-container, .sp-replacer, .sp-preview, .sp-dragger, .sp-slider, .sp-alpha, .sp-clear, .sp-alpha-handle, .sp-container.sp-dragging .sp-input, .sp-container button  {
-    -webkit-user-select:none;
-    -moz-user-select: -moz-none;
-    -o-user-select:none;
-    user-select: none;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -o-user-select: text;
+    user-select: text;
 }
 
 .sp-container.sp-input-disabled .sp-input-container {
