@@ -79,8 +79,12 @@ function (angular, _, kbn) {
 
       metricLabel = (options.alias == null) ? md.expression : options.alias;
 
+		//The endpoints return values in string format, looking at datasource.js in opentsdb
+		//there seem to be an issue with dps as graph.js callPlot function is using jquery flot lib
+		//to render graph which is expecting datapoints to be in integer format. So multiplying key *1000
+		// will help in getting the data to be displayed in the panel.
       _.each(md.dps, function (v, k) {
-        dps.push([v, k]);
+        dps.push([v, k * 1000]);
       });
 
       return { target: metricLabel, datapoints: dps };
