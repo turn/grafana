@@ -41,6 +41,7 @@ function (angular, _, kbn, opentsdbMFunc) {
       //   $scope.get_data();
       // }
       //$scope.setDirectQuery($scope.target.directQueryText);
+
       if (!$scope.panel.directQueries) {
         $scope.panel.directQueries = [];
       } else {
