@@ -42,6 +42,8 @@ function (angular, _, kbn, opentsdbMFunc) {
       // }
       //$scope.setDirectQuery($scope.target.directQueryText);
 
+      //The direct query text is removed so that openTSDBM json doesn't get bloated with Query text.
+      //If in future this needs to be changed, uncomment the below code.
       /*if (!$scope.panel.directQueries) {
         $scope.panel.directQueries = [];
       } else {
