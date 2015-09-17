@@ -77,7 +77,8 @@ function (angular, _, kbn) {
       var dps = [],
           metricLabel = null;
 
-      metricLabel = (options.alias == null) ? md.expression : options.alias;
+
+      metricLabel = ((options == void 0 || options.alias == void 0 || options.alias == null)) ? md.expression : options.alias;
 
 		//The endpoints return values in string format, looking at datasource.js in opentsdb
 		//there seem to be an issue with dps as graph.js callPlot function is using jquery flot lib
