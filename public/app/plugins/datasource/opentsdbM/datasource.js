@@ -10,7 +10,7 @@ function (angular, _, kbn) {
 
   var module = angular.module('grafana.services');
 
-  module.factory('OpenTSDBMDatasource', function($q, $http) {
+  module.factory('OpenTSDBMDatasource', function($q, $http, templateSrv) {
 
     function OpenTSDBMDatasource(datasource) {
       this.type = 'opentsdbM';
@@ -62,7 +62,8 @@ function (angular, _, kbn) {
     }
 
     function convertToQuery(target) {
-      return target.directQueryText;
+
+      return templateSrv.replace(target.directQueryText);
 
       // TEMPORARILY REMOVED FOR SIMPLER OpenTSDBM Query
       // if (!target.shouldDownsample) {

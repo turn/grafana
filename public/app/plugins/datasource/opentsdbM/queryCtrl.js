@@ -49,8 +49,10 @@ function (angular, _, kbn, opentsdbMFunc) {
       } else {
         $scope.panel.directQueries.push($scope.target.directQueryText);
       }*/
-
-      $scope.get_data();
+		if (!_.isEqual($scope.oldDirectQuery, $scope.target.directQueryText) && _.isEmpty($scope.target.errors)) {
+			$scope.oldDirectQuery = angular.copy($scope.target.directQueryText);
+      		$scope.get_data();
+		}
     };
 
     $scope.duplicate = function() {
