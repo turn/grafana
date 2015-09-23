@@ -254,7 +254,7 @@ function (angular, _, kbn) {
       query.tags = angular.copy(target.tags);
       if(query.tags){
         for(var key in query.tags){
-          query.tags[key] = templateSrv.replace(query.tags[key], options.scopedVars);
+          query.tags[key] = templateSrv.replace(query.tags[key], $scope.panel.scopedVars);
         }
       }
 
