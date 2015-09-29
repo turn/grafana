@@ -111,8 +111,17 @@ function (angular, _, config) {
         }, function(err) {
           console.log('Panel data error:', err);
           $scope.panelMeta.loading = false;
-          $scope.panelMeta.error = err.message || "Timeseries data request error";
-          $scope.inspector.error = err;
+		 if(err.data && err.data.error) {
+			$scope.inspector.error = err.data.error;
+			$scope.inspector.error.stack = err.data.error.trace;
+			$scope.inspector.error.message = err.data.error.message;
+			$scope.inspector.error.config = err.config;
+			$scope.panelMeta.error = err.data.error.message || "Timeseries data request error";
+
+		 } else {
+			$scope.panelMeta.error = err.message || "Timeseries data request error";
+			 $scope.inspector.error = err;
+		 }
         });
       };
 
